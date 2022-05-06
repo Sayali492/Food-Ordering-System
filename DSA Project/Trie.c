@@ -128,7 +128,8 @@ void print_trie(Trie *t)
     // printf("%s",temp);
     // temp = temp->characters[0];
     // printf("%s",temp);
-    printf("%c -> ", temp->ch);
+    if (temp->ch != 'R')
+        printf("%c", temp->ch);
     //   printf("%d",index);
     for (int i = 0; i < 26; i++)
     {
@@ -223,6 +224,85 @@ int search(Trie *t, char *word)
         return 0;
 }
 
+
+
+void display_menu(Trie *t){
+    node *p;
+    p=*t;
+    int i=0;
+    if(*t==NULL) return;
+    while(p){
+             p=p->characters[i];
+             if(p!=NULL){
+                 while(p->eow!=1){
+                     printf("%c",p->ch);
+                 }
+             }
+
+    }
+}
+
+void autocomplete(Trie *t, char *word)
+{
+    int a = 0;
+    node *p, *q;
+    p = *t;
+    int j;
+    if (*t == NULL)
+    {
+        printf("Fail\n");
+
+        return;
+    }
+
+    int i = 0, index;
+
+    while (word[i] != '\0')
+    {
+        index = (int)word[i] - 97;
+        // printf("%d", index);
+        p = p->characters[index];
+
+        if (p != NULL)
+        {
+            // p = p->characters[index];
+            i++;
+        }
+        else
+        {
+            printf("No such menu found!");
+            return;
+        }
+    }
+    q = p;
+    for (i = 0; i < 26; i++)
+    {
+        p = q;
+        a = 0;
+        // if (p->eow == 1)
+        //     printf("%s\n", word);
+        // else
+        // {
+        while (p->eow != 1)
+        {
+            p = p->characters[i];
+            if (p != NULL)
+            {
+                a = 1;
+                printf("%s", word);
+                printf("%c", p->ch);
+            }
+
+            else
+                break;
+            // }
+        }
+        if (a == 1)
+            printf("\n");
+    }
+    return;
+}
+
 int main()
 {
     Trie t1;
@@ -234,17 +314,19 @@ int main()
     // scanf("%s", str);
 
     // insert(&t1, "apple");
-    insert(&t1, "aaa");
-    insert(&t1, "baa");
-    insert(&t1, "caa");
-    insert(&t1, "zaa");
+    insert(&t1, "aaaiehsbhd");
+    insert(&t1, "aab");
+    insert(&t1, "aac");
+    insert(&t1, "aad");
+   // insert(&t1, "aa");
 
     // printf("%c", t1->ch);
     // printf("%c", &t1->characters[0]->ch);
     print_trie(&t1);
     //   printf("%c",t1->characters[0]->ch);
     int s = search(&t1, "aaa");
-    printf("search:%d", s);
+    printf("search:%d\n", s);
+    autocomplete(&t1, "aa");
     // int a = (int)ch;
     // printf("%d", a);
     return 0;
