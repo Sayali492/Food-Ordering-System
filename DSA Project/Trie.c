@@ -7,6 +7,7 @@ typedef struct node
 {
     char ch;
     struct node *characters[26];
+    int level;
     int eow;
 
 } node;
@@ -35,6 +36,7 @@ void insert(Trie *t, char *word)
     int a = 2;
     // printf("%d", a);
     int j;
+    int l = 1;
     node *p;
 
     // printf("%d", 2);
@@ -47,6 +49,7 @@ void insert(Trie *t, char *word)
         }
         p->ch = 'R';
         p->eow = 0;
+        p->level = 0;
         *t = p;
     }
     else
@@ -82,13 +85,19 @@ void insert(Trie *t, char *word)
             p = p->characters[index];
             p->ch = word[i];
             p->eow = 0;
+            p->level = l;
+            l++;
             for (j = 0; j < 26; j++)
             {
                 p->characters[j] = NULL;
             }
         }
         else
+        {
             p = p->characters[index];
+            l++;
+        }
+
         i++;
     }
     p->eow = 1;
@@ -116,26 +125,45 @@ void insert(Trie *t, char *word)
 // (*t)->characters[index] = nn;
 // return;
 
-void print_trie(Trie *t)
+void print_trie(Trie *t, char *word, int l)
 {
+
     // Prints the nodes of the trie
     // if (!t)
     //     return;
-    int index;
-    node *temp = *t;
+    static int index = 0;
+    //  char *menu;
+    node *p = *t;
+    // int l = p->level;
+    //  node *q = *t;
     if (*t == NULL)
         return;
     // printf("%s",temp);
     // temp = temp->characters[0];
     // printf("%s",temp);
-    if (temp->ch != 'R')
-        printf("%c", temp->ch);
-    //   printf("%d",index);
+    if (p->ch != 'R')
+    {
+        if (p->level != (l + 1))
+        {
+            if (p->level != l)
+
+                printf("%c", p->ch);
+        }
+        else
+        {
+            printf("\n");
+            printf("%s", word);
+            printf("%c", p->ch);
+        }
+    }
+    // printf("\n");
+    //    printf("%d",index);
     for (int i = 0; i < 26; i++)
     {
-        index = i;
-        print_trie(&temp->characters[i]);
+
+        print_trie(&p->characters[i], word, l);
     }
+    // printf("\n");
     return;
 }
 
@@ -224,24 +252,53 @@ int search(Trie *t, char *word)
         return 0;
 }
 
+// void display_menu(Trie *t)
+// {
+//     node *p, *q, *r;
+//     p = *t;
+//     int i = 0, cnt = 0;
+//     char *menu;
+//     if (*t == NULL)
+//         return;
+//     for (i = 0; i < 26; i++)
+//     {
+//         p = p->characters[i];
 
+// q = p;
+// while (p)
+// {
+//     p = p->characters[i];
+//     r = p;
+//     if (p != NULL)
+//     {
+//         for (i = 0; i < 26; i++)
+//         {
+//             printf("%c", r->ch);
+//             while (p->eow != 1 && p)
+//             {
+//                 p = p->characters[i];
+//                 printf("%c", p->ch);
+//                 cnt++;
+//             }
+//     }
+// }
+// }
+// }
+// }
 
-void display_menu(Trie *t){
-    node *p;
-    p=*t;
-    int i=0;
-    if(*t==NULL) return;
-    while(p){
-             p=p->characters[i];
-             if(p!=NULL){
-                 while(p->eow!=1){
-                     printf("%c",p->ch);
-                 }
-             }
-
+void display(Trie *t)
+{
+    node *p = *t;
+    if (*t == NULL)
+        return;
+    printf("%c->", p->ch);
+    printf("%d\n", p->level);
+    for (int i = 0; i < 26; i++)
+    {
+        display(&p->characters[i]);
     }
+    return;
 }
-
 void autocomplete(Trie *t, char *word)
 {
     int a = 0;
@@ -254,6 +311,9 @@ void autocomplete(Trie *t, char *word)
 
         return;
     }
+    int res = search(&p, word);
+    if (res == 1)
+        printf("%s", word);
 
     int i = 0, index;
 
@@ -275,31 +335,44 @@ void autocomplete(Trie *t, char *word)
         }
     }
     q = p;
-    for (i = 0; i < 26; i++)
-    {
-        p = q;
-        a = 0;
-        // if (p->eow == 1)
-        //     printf("%s\n", word);
-        // else
-        // {
-        while (p->eow != 1)
-        {
-            p = p->characters[i];
-            if (p != NULL)
-            {
-                a = 1;
-                printf("%s", word);
-                printf("%c", p->ch);
-            }
 
-            else
-                break;
-            // }
-        }
-        if (a == 1)
-            printf("\n");
-    }
+    int l = q->level;
+    // printf("%d", l);
+    print_trie(&q, word, l);
+    // for (i = 0; i < 26; i++)
+    // {
+    //     p = q;
+    //     a = 0;
+    //     p = p->characters[i];
+    //     r=p;
+    //     // if (p->eow == 1)
+    //     //     printf("%s\n", word);
+    //     // else
+    //     // {
+    //     while (p->eow != 1)
+    //     {
+
+    //         if (p != NULL)
+    //         {
+    //             for (j = 0; j < 26; j++)
+    //             {
+    //                 p=p->characters[j];
+    //                 a = 1;
+    //                 printf("%s", word);
+    //                 printf("%c", p->ch);
+    //             }
+    //         }
+
+    //         else
+    //             break;
+
+    //         // }
+
+    //         if (a == 1)
+    //             printf("\n");
+    //     }
+    //     return;
+    // }
     return;
 }
 
@@ -315,18 +388,19 @@ int main()
 
     // insert(&t1, "apple");
     insert(&t1, "aaaiehsbhd");
-    insert(&t1, "aab");
-    insert(&t1, "aac");
-    insert(&t1, "aad");
-   // insert(&t1, "aa");
+    insert(&t1, "bbbdfsdfesd");
+    insert(&t1, "cacghhfhfg");
+    insert(&t1, "dadzvzxvf");
+    insert(&t1, "aa");
 
     // printf("%c", t1->ch);
     // printf("%c", &t1->characters[0]->ch);
-    print_trie(&t1);
+    //   print_trie(&t1);
     //   printf("%c",t1->characters[0]->ch);
     int s = search(&t1, "aaa");
     printf("search:%d\n", s);
-    autocomplete(&t1, "aa");
+    autocomplete(&t1, "bb");
+    // display(&t1);
     // int a = (int)ch;
     // printf("%d", a);
     return 0;
