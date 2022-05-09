@@ -387,11 +387,11 @@ int main()
     // scanf("%s", str);
 
     // insert(&t1, "apple");
-    insert(&t1, "aaaiehsbhd");
+    insert(&t1, "zchhiehsbhd");
     insert(&t1, "bbbdfsdfesd");
     insert(&t1, "cacghhfhfg");
     insert(&t1, "dadzvzxvf");
-    insert(&t1, "aa");
+    insert(&t1, "zx");
 
     // printf("%c", t1->ch);
     // printf("%c", &t1->characters[0]->ch);
@@ -399,7 +399,7 @@ int main()
     //   printf("%c",t1->characters[0]->ch);
     int s = search(&t1, "aaa");
     printf("search:%d\n", s);
-    autocomplete(&t1, "bb");
+    autocomplete(&t1, "zx");
     // display(&t1);
     // int a = (int)ch;
     // printf("%d", a);
