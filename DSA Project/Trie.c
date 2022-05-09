@@ -387,19 +387,19 @@ int main()
     // scanf("%s", str);
 
     // insert(&t1, "apple");
-    insert(&t1, "zchhiehsbhd");
-    insert(&t1, "bbbdfsdfesd");
-    insert(&t1, "cacghhfhfg");
-    insert(&t1, "dadzvzxvf");
-    insert(&t1, "zx");
+    insert(&t1, "masala dosa");
+    insert(&t1, "mysore dosa");
+    insert(&t1, "coffee");
+    insert(&t1, "uttappa");
+    insert(&t1, "pasta");
 
     // printf("%c", t1->ch);
     // printf("%c", &t1->characters[0]->ch);
     //   print_trie(&t1);
     //   printf("%c",t1->characters[0]->ch);
-    int s = search(&t1, "aaa");
+    int s = search(&t1, "pasta");
     printf("search:%d\n", s);
-    autocomplete(&t1, "zx");
+    autocomplete(&t1, "m");
     // display(&t1);
     // int a = (int)ch;
     // printf("%d", a);

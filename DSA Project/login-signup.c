@@ -51,7 +51,7 @@ void signup(char name[], char address[], char mobileno[], char username[], char 
     fprintf(fp, "%s ", name);
     fprintf(fp, "%s ", username);
     fprintf(fp, "%s ", address);
-    fprintf(fp, "%s ", mobileno);
+    fprintf(fp, "%s\n", mobileno);
     fclose(fp);
     return;
 }
@@ -97,6 +97,7 @@ int main()
 
         while (i > 0)
         {
+            i=1;
             printf("Enter your username:\n");
             scanf("%s", un);
             fp=fopen("Login.txt","r");
@@ -104,7 +105,7 @@ int main()
             {
                 if (!strcmp(un, word))
                 {
-                    printf("This username already exists!");
+                    printf("This username already exists!\n");
                     i = 2;
                     break;
                 }
@@ -116,12 +117,19 @@ int main()
 
         while (i > 0)
         {
+            i=1;
+            int j=0,cnt=0;
             printf("Enter your password:\n");
             scanf("%s", p);
-            int len = sizeof(p) / sizeof(p[0]);
-            if (len < 8)
+            while(p[j]!='\0'){
+                    cnt++;
+                    j++;
+            }
+          //  int len = sizeof(p) / sizeof(p[0]);
+            //printf("%d",cnt);
+            if (cnt < 8)
             {
-                printf("Password must be at least 8 characters");
+                printf("Password must be at least 8 characters:\n");
                 i = 2;
             }
             if (i != 2)
