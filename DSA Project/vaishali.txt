@@ -1,0 +1,4 @@
+masaladosa    100
+sadadosa      80
+uttappa       100
+cheesedosa    120

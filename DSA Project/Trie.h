@@ -7,6 +7,8 @@ typedef struct node
 
 } node;
 
+
+
 typedef node *Trie;
 void init(Trie *t);
 void insert(Trie *t, char *word);

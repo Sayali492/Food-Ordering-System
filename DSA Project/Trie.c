@@ -2,17 +2,19 @@
 #include <stdlib.h>
 #include "string.h"
 #include "limits.h"
+#include"Trie.h"
 
-typedef struct node
-{
-    char ch;
-    struct node *characters[26];
-    int level;
-    int eow;
 
-} node;
+// typedef struct node
+// {
+//     char ch;
+//     struct node *characters[26];
+//     int level;
+//     int eow;
 
-typedef node *Trie;
+// } node;
+
+// typedef node *Trie;
 
 void init(Trie *t)
 {
@@ -54,7 +56,7 @@ void insert(Trie *t, char *word)
     }
     else
     {
-        printf("ALL fine\n");
+        // printf("ALL fine\n");
         p = *t;
     }
     // printf("%d", 2);
@@ -264,41 +266,41 @@ int search(Trie *t, char *word)
 //     {
 //         p = p->characters[i];
 
-// q = p;
-// while (p)
-// {
-//     p = p->characters[i];
-//     r = p;
-//     if (p != NULL)
-//     {
-//         for (i = 0; i < 26; i++)
+//         q = p;
+//         while (p)
 //         {
-//             printf("%c", r->ch);
-//             while (p->eow != 1 && p)
+//             p = p->characters[i];
+//             r = p;
+//             if (p != NULL)
 //             {
-//                 p = p->characters[i];
-//                 printf("%c", p->ch);
-//                 cnt++;
+//                 for (i = 0; i < 26; i++)
+//                 {
+//                     printf("%c", r->ch);
+//                     while (p->eow != 1 && p)
+//                     {
+//                         p = p->characters[i];
+//                         printf("%c", p->ch);
+//                         cnt++;
+//                     }
+//                 }
 //             }
+//         }
 //     }
 // }
-// }
-// }
-// }
 
-void display(Trie *t)
-{
-    node *p = *t;
-    if (*t == NULL)
-        return;
-    printf("%c->", p->ch);
-    printf("%d\n", p->level);
-    for (int i = 0; i < 26; i++)
-    {
-        display(&p->characters[i]);
-    }
-    return;
-}
+// void display(Trie *t)
+// {
+//     node *p = *t;
+//     if (*t == NULL)
+//         return;
+//     printf("%c->", p->ch);
+//     printf("%d\n", p->level);
+//     for (int i = 0; i < 26; i++)
+//     {
+//         display(&p->characters[i]);
+//     }
+//     return;
+// }
 void autocomplete(Trie *t, char *word)
 {
     int a = 0;
@@ -376,32 +378,121 @@ void autocomplete(Trie *t, char *word)
     return;
 }
 
-int main()
+// void insert_restaurants(Trie t2)
+// {
+//     // init(&t2);
+//     FILE *fp = fopen("restaurants.txt", "r");
+//     char word[255];
+//     while (fscanf(fp, "%s", word) != -1)
+//     {
+//         insert(&t2, word);
+//     }
+//     fclose(fp);
+//     return;
+// }
+//int m1 = 0, m2 = 0;
+int login(char name[], char password[])
 {
-    Trie t1;
-    int i = 0;
-    // char ch;
-    init(&t1);
+    int m2=0;
+    FILE *fptr;
+    char word[255];
+    int wc = 0, i = 0, res;
+    if (!fptr)
+        return 0;
+    // user_acc account;
+    fptr = fopen("Login.txt", "r");
+    while (fscanf(fptr, "%s", word) != -1)
+    {
+        if (!strcmp(name, word))
+        {
+            fscanf(fptr, "%s", word);
+            // printf("%s", word);
+            res = strcmp(word, password);
+            if (res == 0)
+            {
+                printf("You have logged in succesfully!");
+                m2 = 2;
+                return m2;
+            }
+            else
+                printf("Incorrect username or password");
+            return 0;
+        }
+    }
+    printf("Incorrect username or password");
 
-    char *str;
-    // scanf("%s", str);
-
-    // insert(&t1, "apple");
-    insert(&t1, "masala dosa");
-    insert(&t1, "mysore dosa");
-    insert(&t1, "coffee");
-    insert(&t1, "uttappa");
-    insert(&t1, "pasta");
-
-    // printf("%c", t1->ch);
-    // printf("%c", &t1->characters[0]->ch);
-    //   print_trie(&t1);
-    //   printf("%c",t1->characters[0]->ch);
-    int s = search(&t1, "pasta");
-    printf("search:%d\n", s);
-    autocomplete(&t1, "m");
-    // display(&t1);
-    // int a = (int)ch;
-    // printf("%d", a);
-    return 0;
+    fclose(fptr);
+    printf("%d",m2);
+    return m2;
 }
+
+void signup(char name[], char address[], char mobileno[], char username[], char password[])
+{
+    char word[255];
+    FILE *fp;
+    fp = fopen("Login.txt", "a");
+
+    fprintf(fp, "%s ", username);
+    fprintf(fp, "%s\n", password);
+    fclose(fp);
+    fp = fopen("Signup.txt", "a");
+    fprintf(fp, "%s", name);
+    fprintf(fp, "%s\n", username);
+    fprintf(fp, "%s", address);
+    fprintf(fp, "%s\n", mobileno);
+    fprintf(fp, "\n");
+    fclose(fp);
+    return;
+}
+
+
+// int main()
+// {
+//     Trie t1, restaurant;
+//     int i = 0;
+//     // char ch;
+//     init(&t1);
+//     init(&restaurant);
+
+//     char *str;
+//     // scanf("%s", str);
+
+//     // insert(&t1, "apple");
+//     insert(&t1, "masala dosa");
+//     insert(&t1, "mysore dosa");
+//     insert(&t1, "coffee");
+//     insert(&t1, "uttappa");
+//     insert(&t1, "pasta");
+//     insert(&t1, "vaishali");
+//     // display_menu(&t1);
+
+//     // printf("%c", t1->ch);
+//     // printf("%c", &t1->characters[0]->ch);
+//     // print_trie(&t1);
+//     //   printf("%c",t1->characters[0]->ch);
+//     int s = search(&t1, "vaishali");
+//     printf("search:%d\n", s);
+//     autocomplete(&t1, "m");
+
+//     FILE *fp = fopen("restaurants.txt", "r");
+//     char word[255];
+//     while (fscanf(fp, "%s", word) != -1)
+//     {
+//         insert(&restaurant, word);
+//     }
+//     fclose(fp);
+//     // Trie restaurants;
+//     // insert(&restaurant, "vaishali");
+//    // insert_restaurants(restaurant);
+//     int a = search(&restaurant, "vaishali");
+//     printf("%d", a);
+//     autocomplete(&restaurant, "g");
+
+
+//     // insert_restaurants(restaurants);
+//     // autocomplete(&restaurants, "Vai");
+//     // display(&t1);
+//     // int a = (int)ch;
+//     // printf("%d", a);
+//     return 0;
+// }
