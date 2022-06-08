@@ -377,7 +377,7 @@ int main()
                         
                             fclose(fp);
                             //          return 0;
-                            fclose(fp);
+                            //fclose(fp);
                             scanf("%d", &menu);
                             FILE *fptr = fopen("vaishali.txt", "r");
                             while (count != menu)

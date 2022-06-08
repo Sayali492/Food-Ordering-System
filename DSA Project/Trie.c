@@ -422,7 +422,7 @@ int login(char name[], char password[])
     printf("Incorrect username or password");
 
     fclose(fptr);
-    printf("%d",m2);
+    //printf("%d",m2);
     return m2;
 }
 
