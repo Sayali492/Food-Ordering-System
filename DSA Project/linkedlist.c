@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
 #include "limits.h"
 //#include "queue.h"
 #include "main.h"
@@ -10,6 +11,7 @@ void init_list(list *L)
     *L = NULL;
     return;
 }
+
 void print_cart(list L)
 {
     cart *p;
@@ -18,12 +20,13 @@ void print_cart(list L)
         printf("List is Empty");
     while (p != NULL)
     {
-        printf("%s %d %d\n", p->food,p->quantity,p->price);
+        printf("%s                      Quantity:%d        Price:%d\n", p->food,p->quantity,p->price);
         p = p->next;
     }
 }
-void insert_begin(list *L, char *Food,int Price,int quant)
-{ // here first I had done struct node *L,but it didnt give any op,coz I passed its value.Pass the arguments by reference and then u get the op.
+
+void insert_begin(list *L, char *Food,int Price,int quant,int onum)
+{ 
     cart *nn;
     nn = (cart *)malloc(sizeof(cart));
     int i = 0;
@@ -33,6 +36,7 @@ void insert_begin(list *L, char *Food,int Price,int quant)
         i++;
     }
     nn->price=Price;
+    nn->orderno=onum;
    // nn->addr = address;
     nn->quantity = quant;
     nn->next = NULL;
@@ -71,7 +75,7 @@ void delete_item(list *L, char *d)
     // {
     if (p->next == NULL)
     {
-        while (p && p->food != d)
+        while (p && strcmp(p->food,d))
         {
             q = p;
             p = p->next;
@@ -89,7 +93,7 @@ void delete_item(list *L, char *d)
     else
     {
 
-        if (p->food == d)
+        if (!(strcmp(p->food,d)))
         {
 
             *L = p->next;
@@ -99,7 +103,7 @@ void delete_item(list *L, char *d)
         }
         else
         {
-            while (p && p->food != d)
+            while (p && strcmp(p->food,d))
             {
                 q = p;
                 p = p->next;
